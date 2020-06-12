@@ -1,21 +1,30 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Player {
     private String name;
     private double money;
     private int position;
     private ArrayList<Property> properties;
+    private HashMap<String, Integer> monopoly;
     public Player(String pName) {
         name = pName;
         money = 1500;
         properties = new ArrayList<Property>();
+        monopoly = new HashMap<String, Integer>();
+        monopolyFill();
         position = 0;
     }
-
+    private void monopolyFill() {
+        monopoly.put("red", 0);
+        monopoly.put("green", 0);
+        monopoly.put("purple", 0);
+        monopoly.put("blue", 0);
+    }
     public String getName() {
         return name;
     }
-
+    public boolean isMonopolist() { return monopoly.containsValue(3); }
     public ArrayList<Property> getProperties() {
         return properties;
     }
@@ -45,18 +54,18 @@ public class Player {
     }
 
     public void makeMove() {
-        int move = 2 + (int) (Math.random() * 10);
+        int move = 2 + (int) (Math.random() * 4);
         position += move;
         System.out.println("You are moving forward to " + move + " cells");
     }
     public void buyProp(Property bought) {
         this.properties.add(bought);
+        int count = monopoly.get(bought.getColor());
+        count++;
+        monopoly.put(bought.getColor(), count);
         money -= bought.getCost();
     }
-    public boolean isAbleToBuy(Property A) {
-        if (money >= A.getFine()) return true;
-        else  return false;
-    }
+    public boolean isAbleToBuy(Property A) { return money >= A.getCost(); }
     public void payFine(double fine) {
         money -= fine;
     }
@@ -89,8 +98,17 @@ public class Player {
         return name;
     }
     public void printProperties() {
-        for (Property prop : properties) {
-            System.out.printf("%-15s%f%15f%n", prop.getName(), prop.getFine(), prop.getColor());
+        if (properties.size() == 0){
+            System.out.println("Sorry you didn't buy anything");
         }
+        else {
+            for (Property prop : properties) {
+                System.out.printf("%-15s%s%15s", prop.getName(), prop.getFine(), prop.getColor());
+                System.out.println();
+            }
+        }
+    }
+    public void profit(double fine) {
+        money += fine;
     }
 }

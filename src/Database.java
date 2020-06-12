@@ -8,8 +8,8 @@ public class Database {
         try {
             connection = DriverManager.getConnection(
                     "jdbc:postgresql://127.0.0.1:5432/OOP",
-                    "hachiman",
-                    "159630");
+                    "postgres",
+                    "raho1234");
         } catch (Exception e) {
             System.out.println("Sorry, something went wrong!");
             e.printStackTrace();
@@ -39,4 +39,5 @@ public class Database {
         return board;
     }
 
- }
+}
+
