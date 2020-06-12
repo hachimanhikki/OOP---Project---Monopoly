@@ -5,7 +5,7 @@ public class Property extends Field {
     private String color;
     private String type;
     private boolean owned;
-    private  String owner;
+    private Player owner;
     public Property() {}
     public Property(String name, double cost, String type, String color) {
         this.name = name;
@@ -13,7 +13,6 @@ public class Property extends Field {
         this.fine = cost * 0.1;
         this.type = type;
         this.color = color;
-        this.owner = "none";
         this.owned = false;
     }
 
@@ -29,6 +28,10 @@ public class Property extends Field {
         return fine;
     }
 
+    public Player getOwner() {
+        return owner;
+    }
+
     public String getColor() {
         return color;
     }
@@ -36,8 +39,10 @@ public class Property extends Field {
     public boolean isOwned() {
         return owned;
     }
-
-    public void setOwner(String owner) {
+    public void isBought() {
+        owned = true;
+    }
+    public void setOwner(Player owner) {
         this.owner = owner;
     }
     public String toString() {

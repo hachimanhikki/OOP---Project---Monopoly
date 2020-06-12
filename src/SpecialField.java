@@ -11,3 +11,4 @@ public class SpecialField extends Field {
         return this.type;
     }
 }
+
