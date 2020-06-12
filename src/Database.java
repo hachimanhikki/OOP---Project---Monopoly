@@ -31,7 +31,7 @@ public class Database {
 
         return instance;
     }
-    public Board createBoard() throws SQLException {
+    public Board createBoard() throws SQLException { //We retrieve fields from Database and put them into board class
         Board board = new Board();
         if (connection != null) {
             Statement statement = connection.createStatement();

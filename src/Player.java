@@ -62,17 +62,17 @@ public class Player {
         this.properties.add(bought);
         int count = monopoly.get(bought.getColor());
         count++;
-        monopoly.put(bought.getColor(), count);
+        monopoly.put(bought.getColor(), count); // add one to existing amount of properties of the same type
         money -= bought.getCost();
     }
     public boolean isAbleToBuy(Property A) { return money >= A.getCost(); }
     public void payFine(double fine) {
         money -= fine;
     }
-    public void makeFullCycle() {
+    public void makeFullCycle() { // If we make full cycle around the board, we get 250$
         money += 250;
     }
-    public void specEvent() {
+    public void specEvent() { // here we are triggering a special event
         int specCoef = (int) (Math.random() * 5);
         if (specCoef == 0) {
             money += 10;
@@ -108,7 +108,7 @@ public class Player {
             }
         }
     }
-    public void profit(double fine) {
+    public void profit(double fine) { // if someone got into your property he should give his money to you
         money += fine;
     }
 }

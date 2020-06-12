@@ -24,12 +24,12 @@ public class Main {
             return;
         }
         System.out.println("Enter players name:");
-        while (choice != 0) {
+        while (choice != 0) {//Players are creating here, by adding them into arraylist
             String name = scan.next();
             players.add(new Player(name));
             choice--;
         }
-        while (true) {
+        while (true) { //Game starts here
             System.out.println("It is your turn " + players.get(turn).getName());
             while(true) {
                 System.out.println("1. Make a move");
@@ -50,7 +50,7 @@ public class Main {
                     players.get(turn).specEvent();
                 }
             }
-            else {
+            else { // If we are on property class, we could either buy or pay the bill
                 Property property = (Property)game_board.getCell(players.get(turn));
                 if (players.get(turn).isAbleToBuy(property) && !property.isOwned()) {
                     System.out.println("Do you want to buy this, enter 1 if you want or enter anything if not");
@@ -62,30 +62,30 @@ public class Main {
                         ((Property) game_board.getCell(players.get(turn))).isBought();
                     }
                 }
-                else if(property.isOwned()) {
+                else if(property.isOwned()) { // Here we check if it is already owned by someone
                     System.out.println("You are on someone's property, you will be charged to " + property.getFine() + "$");
                     players.get(turn).payFine(property.getFine());
                     int index = players.indexOf(property.getOwner());
                     players.get(index).profit(property.getFine());
                 }
-                else{
+                else{ // You won't have an option to buy anything if you can't afford it
                     System.out.println("You don't have enough money");
                 }
             }
-            if (players.get(turn).getMoney() < 0) {
+            if (players.get(turn).getMoney() < 0) { // if player is broke we exclude him from the game
                 System.out.println(players.get(turn).toString() + " lost the game");
                 players.remove(turn);
             }
-            if (players.get(turn).isMonopolist()){
+            if (players.get(turn).isMonopolist()){ // Condition 1 to win
                 System.out.println("Winner is " + players.get(turn).toString());
                 break;
             }
-            if (players.size() == 1) {
+            if (players.size() == 1) { // Condition 2 to win
                 System.out.println("Winner is " + players.get(0).toString());
                 break;
             }
             turn++;
-            if (turn == players.size()) turn = 0;
+            if (turn == players.size()) turn = 0; // If we get out of bounderies, we set to 0
         }
     }
 }
