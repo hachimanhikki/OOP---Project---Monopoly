@@ -1,19 +1,35 @@
 import java.sql.*;
+
 public class Database {
-    private Connection connection = null;
+    private static Database instance;
+    private Connection connection;
+    private String url = "jdbc:postgresql://localhost:5432/OOP";
+    private String username = ""; //username
+    private String password = ""; //password
+
     public Database() throws Exception {
         makeConnection();
     }
     private void makeConnection() throws Exception {
         try {
-            connection = DriverManager.getConnection(
-                    "jdbc:postgresql://127.0.0.1:5432/OOP",
-                    "postgres",
-                    "");//there should be password
-        } catch (Exception e) {
-            System.out.println("Sorry, something went wrong!");
-            e.printStackTrace();
+            Class.forName("org.postgresql.Driver");
+            this.connection = DriverManager.getConnection(url, username, password);
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Database Connection Creation Failed : " + ex.getMessage());
         }
+    }
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public static Database getInstance() throws Exception {
+        if (instance == null) {
+            instance = new Database();
+        } else if (instance.getConnection().isClosed()) {
+            instance = new Database();
+        }
+
+        return instance;
     }
     public Board createBoard() throws SQLException {
         Board board = new Board();
@@ -38,6 +54,4 @@ public class Database {
         }
         return board;
     }
-
 }
-
