@@ -9,7 +9,7 @@ public class Database {
             connection = DriverManager.getConnection(
                     "jdbc:postgresql://127.0.0.1:5432/OOP",
                     "postgres",
-                    "raho1234");
+                    "");//there should be password
         } catch (Exception e) {
             System.out.println("Sorry, something went wrong!");
             e.printStackTrace();
