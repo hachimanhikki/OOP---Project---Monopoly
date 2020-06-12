@@ -8,14 +8,13 @@ public class Board {
     public void addCell(Field p) {
         this.cells.add(p);
     }
-    public void initMove(Player player) {
+    public Field getCell(Player player) {
         int position = player.getPosition();
         if (position >= 16) {
             player.setPosition(position - 16);
             position -= 16;
+            player.makeFullCycle();
         }
-        if (cells.get(position) instanceof SpecialField) {
-
-        }
+        return cells.get(position);
     }
 }

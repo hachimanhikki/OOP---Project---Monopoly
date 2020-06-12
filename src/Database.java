@@ -15,7 +15,7 @@ public class Database {
             e.printStackTrace();
         }
     }
-    private Board createBoard() throws SQLException {
+    public Board createBoard() throws SQLException {
         Board board = new Board();
         if (connection != null) {
             Statement statement = connection.createStatement();
@@ -25,13 +25,13 @@ public class Database {
                     String name = resultSet.getString("name");
                     double cost = resultSet.getDouble("cost");
                     String type = resultSet.getString("color");
-                    Property newProp = new Property(name, cost, type);
+                    Property newProp = new Property(name, cost, "property", type);
                     board.addCell(newProp);
                 }
                 else {
                     String name = resultSet.getString("name");
                     double cost = resultSet.getDouble("cost");
-                    SpecialField newSP = new SpecialField(name, cost);
+                    SpecialField newSP = new SpecialField(name, "special", cost);
                     board.addCell(newSP);
                 }
             }
